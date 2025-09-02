@@ -1,83 +1,96 @@
-// --- Get all input elements ---
-const modalInput = document.getElementById("modal");
-const hargaBeliInput = document.getElementById("hargaBeli");
+const hasilBox = document.getElementById("hasil");
 const hargaJualInput = document.getElementById("hargaJual");
 const feeInput = document.getElementById("fee");
-const hasilBox = document.getElementById("hasil");
+const coinContainer = document.getElementById("coin-container");
+const addCoinBtn = document.getElementById("addCoin");
 
-// --- Add event listeners to all inputs for real-time calculation ---
-modalInput.addEventListener('input', hitung);
-hargaBeliInput.addEventListener('input', hitung);
-hargaJualInput.addEventListener('input', hitung);
-feeInput.addEventListener('input', hitung);
-
-// --- Create reusable number formatters ---
+// Formatter
 const currencyFormatter = new Intl.NumberFormat('id-ID', {
   style: 'currency',
   currency: 'IDR',
   minimumFractionDigits: 0,
-  maximumFractionDigits: 2,
 });
-
 const numberFormatter = new Intl.NumberFormat('id-ID', {
   minimumFractionDigits: 2,
   maximumFractionDigits: 8,
 });
-
 const percentFormatter = new Intl.NumberFormat('id-ID', {
   style: 'percent',
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
 });
 
-// --- Main calculation function ---
+// Event listeners
+hargaJualInput.addEventListener("input", hitung);
+feeInput.addEventListener("input", hitung);
+coinContainer.addEventListener("input", hitung);
+
+addCoinBtn.addEventListener("click", () => {
+  const coinGroup = document.createElement("div");
+  coinGroup.classList.add("coin-group");
+  coinGroup.innerHTML = `
+    <div class="input-group">
+      <label>Modal (IDR / USDT)</label>
+      <span class="input-icon">💰</span>
+      <input type="number" class="modal" placeholder="contoh: 1000000">
+    </div>
+    <div class="input-group">
+      <label>Harga Beli per Koin</label>
+      <span class="input-icon">₿</span>
+      <input type="number" class="hargaBeli" placeholder="contoh: 50000">
+    </div>
+    <button type="button" class="removeCoin">❌ Hapus</button>
+  `;
+  coinContainer.appendChild(coinGroup);
+
+  // Event untuk tombol hapus
+  coinGroup.querySelector(".removeCoin").addEventListener("click", () => {
+    coinGroup.remove();
+    hitung();
+  });
+});
+
 function hitung() {
-  const modal = parseFloat(modalInput.value);
-  const hargaBeli = parseFloat(hargaBeliInput.value);
   const hargaJual = parseFloat(hargaJualInput.value);
   const feePersen = parseFloat(feeInput.value) / 100;
 
-  // --- Validation ---
-  if (!modal || !hargaBeli || !hargaJual || isNaN(feePersen)) {
-    hasilBox.innerHTML = `<p class="placeholder">👉 Hasilnya ada disin</p>`;
+  const modalInputs = document.querySelectorAll(".modal");
+  const hargaBeliInputs = document.querySelectorAll(".hargaBeli");
+
+  let totalModal = 0;
+  let totalKoin = 0;
+
+  modalInputs.forEach((modalInput, i) => {
+    const modal = parseFloat(modalInput.value);
+    const hargaBeli = parseFloat(hargaBeliInputs[i].value);
+    if (!isNaN(modal) && !isNaN(hargaBeli) && modal > 0 && hargaBeli > 0) {
+      totalModal += modal;
+      totalKoin += modal / hargaBeli;
+    }
+  });
+
+  if (totalKoin <= 0 || !hargaJual || hargaJual <= 0 || isNaN(feePersen)) {
+    hasilBox.innerHTML = `<p class="placeholder">👉 Hasil perhitungan akan muncul di sini.</p>`;
     return;
   }
 
-  if (modal <= 0 || hargaBeli <= 0 || hargaJual <= 0 || feePersen < 0) {
-    hasilBox.innerHTML = `<p class="placeholder" style="color:var(--accent-red);">⚠️ Input tidak boleh nol atau negatif.</p>`;
-    return;
-  }
-  
-  // --- Core Calculations ---
-  const jumlahKoin = modal / hargaBeli;
-  const nilaiJual = jumlahKoin * hargaJual;
-  
-  const feeBeli = modal * feePersen;
+  const nilaiJual = totalKoin * hargaJual;
+  const feeBeli = totalModal * feePersen;
   const feeJual = nilaiJual * feePersen;
   const totalFee = feeBeli + feeJual;
 
-  const profitBersih = nilaiJual - modal - totalFee;
-  const persenBersih = profitBersih / modal;
+  const profitBersih = nilaiJual - totalModal - totalFee;
+  const persenBersih = profitBersih / totalModal;
 
-  // --- Determine Profit/Loss for styling ---
-  const profitClass = profitBersih >= 0 ? 'profit' : 'loss';
-  const profitIcon = profitBersih >= 0 ? '🟢' : '🔴';
+  const profitClass = profitBersih >= 0 ? "profit" : "loss";
+  const profitIcon = profitBersih >= 0 ? "🟢" : "🔴";
 
-  // --- Display Results ---
   hasilBox.innerHTML = `
     <ul>
-      <li>
-        <span>Jumlah Koin</span>
-        <strong>${numberFormatter.format(jumlahKoin)}</strong>
-      </li>
-      <li>
-        <span>Nilai Aset Saat Dijual</span>
-        <strong>${currencyFormatter.format(nilaiJual)}</strong>
-      </li>
-      <li>
-        <span>Total Biaya (Fee)</span>
-        <strong>${currencyFormatter.format(totalFee)}</strong>
-      </li>
+      <li><span>Total Modal</span><strong>${currencyFormatter.format(totalModal)}</strong></li>
+      <li><span>Total Koin</span><strong>${numberFormatter.format(totalKoin)}</strong></li>
+      <li><span>Nilai Aset Saat Dijual</span><strong>${currencyFormatter.format(nilaiJual)}</strong></li>
+      <li><span>Total Biaya (Fee)</span><strong>${currencyFormatter.format(totalFee)}</strong></li>
       <li style="padding-top: 15px; margin-top: 5px; border-top: 2px solid #475569;">
         <span>Profit / Loss Bersih</span>
         <strong class="${profitClass}">${currencyFormatter.format(profitBersih)}</strong>
@@ -90,5 +103,4 @@ function hitung() {
   `;
 }
 
-// --- Initial calculation on page load (if values are pre-filled) ---
-document.addEventListener('DOMContentLoaded', hitung);
+document.addEventListener("DOMContentLoaded", hitung);
