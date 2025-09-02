@@ -25,17 +25,24 @@
     </header>
 
     <main class="calculator">
-      <div class="input-group">
-        <label for="modal">Modal (IDR / USDT)</label>
-        <span class="input-icon">💰</span>
-        <input type="number" id="modal" placeholder="contoh: 1000000">
+      <div id="coin-container">
+        <!-- Input pertama default -->
+        <div class="coin-group">
+          <div class="input-group">
+            <label>Modal (IDR / USDT)</label>
+            <span class="input-icon">💰</span>
+            <input type="number" class="modal" placeholder="contoh: 1000000">
+          </div>
+
+          <div class="input-group">
+            <label>Harga Beli per Koin</label>
+            <span class="input-icon">₿</span>
+            <input type="number" class="hargaBeli" placeholder="contoh: 50000">
+          </div>
+        </div>
       </div>
 
-            <div class="input-group">
-        <label for="hargaBeli">Harga Beli per Koin</label>
-        <span class="input-icon">₿</span> <input type="number" id="hargaBeli" placeholder="contoh: 50000">
-      </div>
-
+      <button type="button" id="addCoin">+ Tambah Koin</button>
 
       <div class="input-group">
         <label for="hargaJual">Target Harga Jual per Koin</label>
@@ -55,7 +62,7 @@
     </main>
     
     <footer>
-        <p>&copy; 2025 - Dibuat oleh Agus Nurcahyono .</p>
+        <p>&copy; 2025 - Dibuat dengan ❤️ untuk para trader.</p>
     </footer>
   </div>
 
