@@ -182,3 +182,37 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
+#addCoin {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  background: var(--accent-blue);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#addCoin:hover {
+  background: #0ea5e9;
+}
+
+.removeCoin {
+  background: var(--accent-red);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.removeCoin:hover {
+  background: #dc2626;
+}
