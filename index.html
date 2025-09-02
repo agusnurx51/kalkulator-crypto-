@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kalkulator profit crypto sederhana untuk menghitung potensi keuntungan dan kerugian dari trading Anda, sudah termasuk biaya (fee) exchange.">
+  <meta name="keywords" content="crypto, calculator, kalkulator, profit, bitcoin, trading, indonesia">
+  
+  <title>Kalkulator Profit Crypto | Hitung Keuntungan Anda</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧮</text></svg>">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>Kalkulator Profit Crypto 📈</h1>
+      <p>Hitung potensi keuntungan trading Anda dengan akurat.</p>
+    </header>
+
+    <main class="calculator">
+      <div class="input-group">
+        <label for="modal">Modal (IDR / USDT)</label>
+        <span class="input-icon">💰</span>
+        <input type="number" id="modal" placeholder="contoh: 1000000">
+      </div>
+
+            <div class="input-group">
+        <label for="hargaBeli">Harga Beli per Koin</label>
+        <span class="input-icon">₿</span> <input type="number" id="hargaBeli" placeholder="contoh: 50000">
+      </div>
+
+
+      <div class="input-group">
+        <label for="hargaJual">Target Harga Jual per Koin</label>
+        <span class="input-icon">🎯</span>
+        <input type="number" id="hargaJual" placeholder="contoh: 60000">
+      </div>
+      
+      <div class="input-group">
+        <label for="fee">Fee Exchange (%)</label>
+        <span class="input-icon">⚡</span>
+        <input type="number" id="fee" placeholder="contoh: 0.1" value="0.1">
+      </div>
+
+      <div class="result" id="hasil">
+        <p class="placeholder">👉 Hasil perhitungan akan muncul di sini.</p>
+      </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 - Dibuat dengan ❤️ untuk para trader.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,184 @@
+/* --- Reset & Base Styles --- */
+:root {
+  --bg-dark: #0f172a;
+  --bg-light: #1e293b;
+  --card-bg: #1e293b;
+  --input-bg: #334155;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --accent-blue: #38bdf8;
+  --accent-green: #4ade80;
+  --accent-red: #f87171;
+  --border-color: #334155;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* --- Main Container & Layout --- */
+.container {
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+header p {
+    color: var(--text-secondary);
+    margin-bottom: 30px;
+}
+
+/* --- Calculator Card --- */
+.calculator {
+  background: var(--card-bg);
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px var(--shadow-color);
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.input-icon {
+    position: absolute;
+    top: 40px;
+    left: 15px;
+    color: var(--text-secondary); /* Default icon color */
+    font-size: 1.1rem;
+}
+
+/* --- Specific style for Bitcoin icon --- */
+.input-group .input-icon:has(+ #hargaBeli) {
+  color: #fce303; /* Kuning cerah */
+}
+
+
+input[type="number"] {
+  width: 100%;
+  padding: 12px 15px 12px 45px; /* Left padding for icon */
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  outline: none;
+  background: var(--input-bg);
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Hide number input arrows */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input:focus {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+/* --- Result Box --- */
+.result {
+  margin-top: 25px;
+  padding: 20px;
+  background: var(--input-bg);
+  border-radius: 12px;
+  border-left: 5px solid var(--accent-blue);
+  transition: all 0.3s ease;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result .placeholder {
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.result ul {
+  list-style: none;
+  width: 100%;
+}
+
+.result li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #475569;
+}
+
+.result li:last-child {
+  border-bottom: none;
+}
+
+.result li span {
+  color: var(--text-secondary);
+}
+
+.result li strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Dynamic coloring for profit/loss */
+.profit { color: var(--accent-green) !important; }
+.loss { color: var(--accent-red) !important; }
+
+/* --- Footer --- */
+footer {
+    margin-top: 30px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+footer a {
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 500;
+}
+footer a:hover {
+    text-decoration: underline;
+}
