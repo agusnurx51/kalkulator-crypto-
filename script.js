@@ -74,13 +74,19 @@ function hitung() {
     return;
   }
 
+  // Nilai jual kotor
   const nilaiJual = totalKoin * hargaJual;
+
+  // Hitung fee
   const feeBeli = totalModal * feePersen;
   const feeJual = nilaiJual * feePersen;
   const totalFee = feeBeli + feeJual;
 
+  // Profit bersih sudah dipotong fee
   const profitBersih = nilaiJual - totalModal - totalFee;
-  const persenBersih = profitBersih / totalModal;
+
+  // Persentase dihitung tanpa fee (tetap murni harga jual vs beli)
+  const persenProfit = (nilaiJual - totalModal) / totalModal;
 
   const profitClass = profitBersih >= 0 ? "profit" : "loss";
   const profitIcon = profitBersih >= 0 ? "🟢" : "🔴";
@@ -97,7 +103,7 @@ function hitung() {
       </li>
       <li>
         <span>Persentase Profit / Loss</span>
-        <strong class="${profitClass}">${profitIcon} ${percentFormatter.format(persenBersih)}</strong>
+        <strong class="${profitClass}">${profitIcon} ${percentFormatter.format(persenProfit)}</strong>
       </li>
     </ul>
   `;
